@@ -8,8 +8,9 @@
 
 #### 搜索引擎
 <img src="./images/index.jpg" width="750" height="650">
+
 #### 推荐新闻
-<img src="./images/recommend.jpg" width="750" height="650">
+<img src="./images/recommend.jpg" width="750" height="450">
 
 ## 代码介绍
 
