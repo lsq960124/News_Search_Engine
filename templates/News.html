@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/search.css" />
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/bootstrap/dist/js/jquery-1.11.3.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title>{{doc[3]}}</title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+    
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+    <div id="basic" align="center">
+        <h4>{{doc[3]}}</h4>
+        <p>{{doc[4]}}</p>
+        <p><a href="{{doc.url}}" target="_blank">{{doc[2]}}</a></p>
+    </div>
+    <hr/>
+    <div id="detail" align="center">
+        <table width="1000" border="0">
+            <tr>
+                <td style="width:1000px"><p>{{doc[5]}}</p></td>
+            </tr>
+        </table>
+    </div>
+    <hr/>
+    <div align="center">
+        <table width="1000" border="0">
+            <tr>
+                <td style="width:1000px"><h5>推荐阅读:</h5></td>
+            </tr>
+            {% for recommend in recommends %}
+            <tr>
+                <td style="width:1000px"><a href="/news?newsid={{recommend[0]}}" target="_blank">{{recommend[1]}}</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

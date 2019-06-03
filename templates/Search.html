@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/search.css" />
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/bootstrap/dist/js/jquery-1.11.3.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title>新闻搜索引擎</title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+        p {
+            white-space:nowrap;
+            word-wrap:break-word;
+            word-break:break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+
+<!--content-->
+<div class="container" >
+    <div class="jumbotron">
+        <h3 align="center">新闻检索系统</h3>
+        <div class="search bar7">
+            <form action="/search" method="GET">
+                <p>
+                    {% if key %}
+                        <input type="text" name="keyword" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="keyword" >
+                    {% endif %}
+                     <button type="submit"></button>
+                </p>
+            </form>
+        </div>
+    </div>
+        <ul class="nav nav-tabs nav-justified" id="myTabs">
+            <li class="active"><a href="#all" >全部</a></li>
+            <li><a href="#news">新闻</a></li>
+            <li><a href="#sports">体育</a></li>
+            <li><a href="#fashion">时尚</a></li>
+            <li><a href="#finance">财经</a></li>
+            <li><a href="#ent">娱乐</a></li>
+            <li><a href="#tech">科技</a></li>
+            <li><a href="#edu">教育</a></li>
+            <li><a href="#travel">旅游</a></li>
+            <li><a href="#games">游戏</a></li>
+            <li><a href="#auto">汽车</a></li>
+        </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+       <!-- label -->
+        <div  role="tabpanel"  class="tab-pane active" id="all">
+            {% if docs %} 
+            {% for doc in docs %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+       <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="news">
+            {% if result.news %} 
+            {% for doc in result.news %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+       <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="sports">
+            {% if result.sports %} 
+            {% for doc in result.sports %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="fashion">
+            {% if result.fashion %} 
+            {% for doc in result.fashion %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="finance">
+            {% if result.finance %} 
+            {% for doc in result.finance %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="ent">
+            {% if result.ent %} 
+            {% for doc in result.ent %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="tech">
+            {% if result.tech %} 
+            {% for doc in result.tech %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="edu">
+            {% if result.edu %} 
+            {% for doc in result.edu %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="travel">
+            {% if result.travel %} 
+            {% for doc in result.travel %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+               <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="games">
+            {% if result.games %} 
+            {% for doc in result.games %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+        <!-- label -->
+        <div  role="tabpanel"  class="tab-pane" id="auto">
+            {% if result.auto %} 
+            {% for doc in result.auto %}
+                <ul id="navigation">
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
+                    </p>
+                </ul>
+        
+            <br/>
+            {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}   
+            </div>   
+        <!-- end label -->
+    </div>
+</div>
+</body>
+</html>

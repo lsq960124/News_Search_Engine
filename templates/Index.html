@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/search.css" />
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/bootstrap/dist/js/jquery-1.11.3.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title>新闻搜索引擎</title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+        p {
+            white-space:nowrap;
+            word-wrap:break-word;
+            word-break:break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+
+<!--content-->
+<div class="container" >
+    <div class="jumbotron">
+        <h3 align="center">新闻检索系统</h3>
+        <div class="search bar7">
+            <form action="/search" method="GET">
+                <p>
+                    {% if key %}
+                        <input type="text" name="keyword" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="keyword" >
+                    {% endif %}
+                     <button type="submit"></button>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
