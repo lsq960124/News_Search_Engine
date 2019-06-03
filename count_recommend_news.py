@@ -15,6 +15,7 @@ import os
 import jieba
 import threading
 import multiprocessing
+import os
 from gensim.models.doc2vec import Doc2Vec, LabeledSentence
 TaggededDocument = gensim.models.doc2vec.TaggedDocument
 
@@ -85,11 +86,13 @@ def predict(docs):
 
 
 if __name__ == '__main__':
-    if not os.path.exists("word2vec/model_doc2vec"):
+    if not os.path.exists("word2vec"):
+        os,makedir("./word2vec/")
+    if not os.path.exists("./word2vec/model_doc2vec"):
         x_train = get_corpus()
         model_dm = train(x_train)
     else:
-        model_dm = Doc2Vec.load("word2vec/model_doc2vec")
+        model_dm = Doc2Vec.load("./word2vec/model_doc2vec")
 
     create_recommend_db()
 

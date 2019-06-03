@@ -1,5 +1,10 @@
 # 新闻搜索引擎
 
+### 项目效果
+
+<img src="./images/index.jpg" width="750" height="350">
+
+
 ## 代码介绍
 
 ```
@@ -28,14 +33,15 @@
 
 ### 项目启动方式
 
+##### 如果你是第一次启动本项目：
 
-启动 `app.py` 即可启动项目
-
-
-* 如果需要重新爬取新的链接，重新构建索引，重新计算推荐情况。
+* 需要重新爬取新的链接，重新构建索引，重新计算推荐情况。
 * step1： 运行 `get_links_from_sina.py` 获取链接；运行它会生成一个 links.txt
 * step2： 运行`spyder_news_infomation.py` 爬取链接的内容，存到数据库中
 * step3： 运行`create_index.py` 为搜索引擎构建索引
 * step4： 运行`count_recommend_news.py` 计算针对每个新闻的推荐新闻
 * step5： 运行 `app.py` 即可启动项目
 
+##### 如果你不是第一次启动本项目：
+
+启动 `app.py` 即可启动项目

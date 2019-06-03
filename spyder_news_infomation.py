@@ -13,6 +13,7 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
 import sqlite3
+
 conn = sqlite3.connect('./db/ir.db')
 c = conn.cursor()
 c.execute('''DROP TABLE IF EXISTS news''')

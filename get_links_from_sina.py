@@ -10,6 +10,8 @@ Created on Fri May 31 19:57:55 2019
 import requests
 import re
 import sys
+import os
+# 递归次数限制
 sys.setrecursionlimit(1000000000)
 
 # 新闻
@@ -71,8 +73,17 @@ def cawl_herfs(link,label,i):
 
 
 if __name__ == "__main__":
-    for i,label in enumerate(label_list):
-        cawl_herfs(label,[name for name in globals() if globals()[name] is label][0],i+1) 
-        
-    with open("./data/links.txt","w+") as f:
-        f.write("\n".join(result))
+
+    links_path = "./data/links.txt"
+
+    if not os.path.exists(links_path):
+        os,makedirs("./data/")
+
+        for i,label in enumerate(label_list):
+            cawl_herfs(label,[name for name in globals() if globals()[name] is label][0],i+1) 
+            
+        with open(links_path,"w+") as f:
+            f.write("\n".join(result))
+
+    else:
+        print('链接已爬取，无需重复爬取')
