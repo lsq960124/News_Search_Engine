@@ -74,8 +74,9 @@ def newsinfo():
 
         c.execute('select * from recommend where id={}'.format(newsid))
         recommends = c.fetchone()
+        recommends = recommends[1:]
         recommend_news = []
-        for recommend_id in recommends:
+        for recommend_id in recommends :
             c.execute('select id,title from news where id={}'.format(recommend_id))
             recommend_news.append(c.fetchone())
         

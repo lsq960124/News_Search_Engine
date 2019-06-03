@@ -1,9 +1,15 @@
 # 新闻搜索引擎
 
-### 项目效果
+### 算法使用
+```
+    本项目的搜索引擎功能： 倒排索引+BM25算法
+    本项目的针对每个新闻的推荐新闻： DOC2VEC相似度算法
+```
 
-<img src="./images/index.jpg" width="750" height="350">
-
+#### 搜索引擎
+<img src="./images/index.jpg" width="750" height="650">
+#### 推荐新闻
+<img src="./images/recommend.jpg" width="750" height="650">
 
 ## 代码介绍
 
