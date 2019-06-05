@@ -60,7 +60,9 @@ class CountRecommend:
                                                                                  100 * recommends[0] // length))
                 return True
             except Exception as e:
-                print('[-] write recommends to db error\t times:{}\t error:{}'.format(i, e))
+                print('[-] write recommends to db error\t id:{}\t times:{}\t error:{}'.format(recommends[0],i, e))
+                self.conn.close()
+                self.conn = self.create_sqlite3_conn()
                 i += 1
 
     def select_documents_from_db(self):

@@ -79,3 +79,30 @@ def search_use_bm25_model(sentence):
     scores.reverse()
     return [fetch_news_db(id) for id,score in scores][:20]
 
+'''初始化历史表'''
+def init_history_db():
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS history
+                 (id INTEGER , times INTEGER) ''')
+    conn.commit()
+    print("init table history success ")
+
+
+def update_history(newsid):
+
+    c = conn.cursor()
+    c.execute('''SELECT count(1) FROM history WHERE id = {} '''.format(newsid))
+    times = c.fetchone()
+
+    if times[0]:
+        times = times[0] + 1
+        c.execute("UPDATE history SET times= {} WHERE id={}".format(times,newsid))
+        conn.commit()
+        print("updata newsid : {}, r: {}".format(newsid,times))
+    else:
+        times = 1
+        c.execute("INSERT INTO history VALUES (?, ?)",(newsid,times))
+        conn.commit()
+        print("insert into history newsid:{}".format(newsid))
+
+

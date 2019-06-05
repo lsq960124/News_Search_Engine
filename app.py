@@ -11,18 +11,36 @@ import sqlite3
 from flask import Flask, request, render_template
 from search import search_use_bm25_model
 from search import conn
-
+from search import init_history_db
+from search import update_history
+from config import label_list
 app = Flask(__name__)
 
-label_list = ["news", "sports", "fashion", "finance", "ent", "tech", 
-              "edu", "travel", "games", "auto"]
 
 @app.route("/")
 def root():
     '''
     主页面
     ''' 
-    return render_template("Index.html")
+    news = []
+    try:
+        c = conn.cursor()
+        c.execute('select id,title from news limit 10')
+        news = c.fetchall()
+    except Exception as e:
+        print("hots news error:", e)
+
+    history = []
+    try:
+        c.execute('''select a.id,a.title
+                            from news as a  inner join
+                            (select id from history ORDER BY times limit 10) as b
+                            on  a.id=b.id''')
+        history = c.fetchall()
+    except Exception as e:
+        print("history news error:", e)
+
+    return render_template("Index.html", hots=news, history=history)
 
 @app.route("/search", methods=['POST', 'GET'])
 def search():
@@ -30,11 +48,9 @@ def search():
     新闻检索
     :return: Search.html
     """
-    result = {  'news' : [],'sports' : [],
-                'fashion' : [],'finance' : [],
-                'ent' : [],'tech' : [],
-                'edu' : [],'travel' : [],
-                'games' : [], 'auto' : [] }
+    docs = []
+    result = {label: [] for label in label_list}
+    keyword = ''
     try:
         if request.method == 'GET':
             keyword = request.values.get('keyword')
@@ -44,8 +60,8 @@ def search():
                 for label in label_list:
                     if doc[1] == label:
                         result[label].append(doc)
-    except:
-        docs = []
+    except Exception as e:
+        print('search engine error:',e)
     return render_template("Search.html",
                              docs = docs,
                              result = result,
@@ -58,26 +74,33 @@ def newsinfo():
     书籍详情
     :return: news.html
     """
+    init_history_db()
+
     news = []
-    recommend = []
-    if request.method == 'GET':
-        newsid = request.args.get('newsid')
+    recommend_news = []
+    try:
+        if request.method == 'GET':
+            newsid = request.args.get('newsid')
 
-        c = conn.cursor()
-        c.execute('select * from news where id= {} '.format(newsid))
-        news = c.fetchone()
+            update_history(newsid)
 
-        c.execute('select * from recommend where id={}'.format(newsid))
-        recommends = c.fetchone()
-        
-        print(recommends)
-        recommends = recommends[1:]
-        recommend_news = []
-        for recommend_id in recommends :
-            c.execute('select id,title from news where id={}'.format(recommend_id))
-            recommend_news.append(c.fetchone())
-        
-        print(recommend_news)
+            c = conn.cursor()
+            c.execute('select * from news where id= {} '.format(newsid))
+            news = c.fetchone()
+
+            c.execute('select * from recommend where id={}'.format(newsid))
+            recommends = c.fetchone()
+
+            recommends = recommends[1:]
+            recommend_news = []
+            for recommend_id in recommends :
+                c.execute('select id,title from news where id={}'.format(recommend_id))
+                recommend_news.append(c.fetchone())
+
+
+    except Exception as e:
+        print('news info error:',e)
+
     return render_template('News.html',doc=news, recommends=recommend_news)
 
 if __name__ == '__main__':

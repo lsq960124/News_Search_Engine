@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="static/css/search.css" />
+    <link rel="stylesheet" href="static/css/search.css"/>
     <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
     <script src="static/bootstrap/dist/js/jquery-1.11.3.min.js"></script>
@@ -10,25 +10,28 @@
     <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
     <title>新闻搜索引擎</title>
     <style>
-       .row{
-           margin-top: 20px;;
+        .row {
+            margin-top: 20px;;
         }
+
         p {
-            white-space:nowrap;
-            word-wrap:break-word;
-            word-break:break-all;
+            white-space: nowrap;
+            word-wrap: break-word;
+            word-break: break-all;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .center{
+
+        .center {
             text-align: center;
         }
-        .pagination{
+
+        .pagination {
             background: #cccccc;
         }
     </style>
     <script>
-        $(function(){
+        $(function () {
             $('#myTabs a').click(function (e) {
                 $(this).tab('show')
             });
@@ -38,20 +41,50 @@
 <body>
 
 <!--content-->
-<div class="container" >
+<div class="container">
     <div class="jumbotron">
         <h3 align="center">新闻检索系统</h3>
         <div class="search bar7">
             <form action="/search" method="GET">
                 <p>
                     {% if key %}
-                        <input type="text" name="keyword" value="{{key}}">
+                        <input type="text" name="keyword" value="{{ key }}">
                     {% else %}
-                        <input type="text" name="keyword" >
+                        <input type="text" name="keyword">
                     {% endif %}
-                     <button type="submit"></button>
+                    <button type="submit"></button>
                 </p>
             </form>
+        </div>
+    </div>
+    <ul class="nav nav-tabs nav-justified" id="myTabs">
+        <li class="active"><a href="#all">热点新闻</a></li>
+        <li><a href="#keyword">最近搜索</a></li>
+    </ul>
+    <div align="center" class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="all">
+            {% if hots %}
+                {% for doc in hots %}
+                    <ul class="nav nav-justified" id="myTabs">
+                        <a href="/news?newsid={{ doc[0] }}" target="_blank">{{ doc[1] }}</a>
+                    </ul>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}
+        </div>
+        <div role="tabpanel" class="tab-pane active" id="keyword">
+            {% if history %}
+                {% for doc in history %}
+                    <ul class="nav nav-justified" id="myTabs">
+                        <a href="/news?newsid={{ doc[0] }}" target="_blank">{{ doc[1] }}</a>
+                    </ul>
+                    <br/>
+                {% endfor %}
+            {% else %}
+                <p>对不起，没有您搜索的网页！</p>
+            {% endif %}
         </div>
     </div>
 </div>
