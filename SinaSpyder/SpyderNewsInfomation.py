@@ -38,7 +38,7 @@ class SinaNewsInfomationSpyder:
     def create_sqlite3_conn(self):
         if not os.path.exists(self.db_dir):
             os.makedirs(self.db_dir)
-        return sqlite3.connect(self.db, check_same_thread=False)
+        return sqlite3.connect(self.db, check_same_thread=False,timeout=10)
 
     def init_news_table(self):
         """

@@ -55,8 +55,8 @@ class SinaNewsLinkSpyder:
             pattern = 'href="(.*?)"'
             herfs = re.findall(pattern, html, re.S)
             for herf in herfs:
-                if channel in herf and "2019" in herf and herf.endswith(
-                        "html") and herf not in root_links and herf not in self.links:
+                if channel in herf and "2019" in herf and "sina" in herf and herf.endswith(
+                        "html") and herf not in root_links and herf not in self.links :
                     print("[-] reslut lenght---> {}".format(len(self.links)))
                     print("[+] herf--> {}".format(herf))
                     root_links.add(herf)

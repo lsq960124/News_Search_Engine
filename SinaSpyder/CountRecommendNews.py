@@ -37,7 +37,7 @@ class CountRecommend:
     def create_sqlite3_conn(self):
         if not os.path.exists(self.db_dir):
             os.makedirs(self.db_dir)
-        return sqlite3.connect(self.db, check_same_thread=False)
+        return sqlite3.connect(self.db, check_same_thread=False,timeout=10)
 
     def init_recommend_db(self):
         c = self.conn.cursor()
@@ -51,7 +51,9 @@ class CountRecommend:
 
     def write_recommend_to_db(self, recommends):
         c = self.conn.cursor()
-        c.execute("INSERT INTO recommend VALUES (?, ?, ?, ?, ?, ?)", tuple(recommends))
+        sql = "INSERT INTO recommend VALUES (?, ?, ?, ?, ?, ?)", tuple(recommends)
+        print(sql)
+        c.execute(sql)
         self.conn.commit()
 
     def select_documents_from_db(self):
@@ -106,7 +108,9 @@ class CountRecommend:
 
 CountRecommend = CountRecommend()
 
-
+documents = CountRecommend.select_documents_from_db()
+length = len(documents)
+new_recommends = []
 def predict(docs):
     try:
         id, sentence = docs
@@ -115,21 +119,23 @@ def predict(docs):
         sims = CountRecommend.model.docvecs.most_similar([inferred_vector_dm], topn=6)
         if sims:
             sims = [id] + [int(i[0]) for i in sims if int(i[0]) != id]
-            print("[+] id :{}, recommend id : {}".format(id, sims))
-            CountRecommend.write_recommend_to_db(sims)
+            sims = sims[:6]
+            print("[+] id :{} recommend done, \t {}%".format(id, id*100//length))
+            new_recommends.append(sims)
+            
     except  Exception as e:
         print("[-] id : {},error:{}".format(id, e))
-
 
 def count_recommend_start():
     flag = CountRecommend.is_recommend_tabel_exists()
     if not flag:
         print("start count recommend ...")
-        documents = CountRecommend.select_documents_from_db()
         pool = multiprocessing.Pool()
         # 多进程
         thread = threading.Thread(target=pool.map, args=(predict, [docs for docs in documents]))
         thread.start()
         thread.join()
+        for new_recommend in new_recommends:
+            CountRecommend.write_recommend_to_db(new_recommend)
     else:
         print("count recommend has already exists,dont create again...")
