@@ -1,3 +1,6 @@
 /word2vec/
 *__pycache__/
 /db/
+.idea
+/word2vec/
+/data/

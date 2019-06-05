@@ -11,8 +11,14 @@ import jieba
 import math
 import operator
 import sqlite3
+import os
+# bm25 confg
+from SinaSpyder.bm25_config import *
+# 基础配置参数
 from config import *
 
+# 数据库地址
+db_path = os.path.join(db_dir,db_file_name)
 # 创建数据库连接
 conn = sqlite3.connect(db_path, check_same_thread=False)
 

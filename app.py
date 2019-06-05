@@ -30,16 +30,11 @@ def search():
     新闻检索
     :return: Search.html
     """
-    result = {'news' : [],
-            'sports' : [],
-            'fashion' : [],
-            'finance' : [],
-            'ent' : [],
-            'tech' : [],
-            'edu' : [],
-            'travel' : [],
-            'games' : [],
-            'auto' : [] }
+    result = {  'news' : [],'sports' : [],
+                'fashion' : [],'finance' : [],
+                'ent' : [],'tech' : [],
+                'edu' : [],'travel' : [],
+                'games' : [], 'auto' : [] }
     try:
         if request.method == 'GET':
             keyword = request.values.get('keyword')
@@ -74,6 +69,8 @@ def newsinfo():
 
         c.execute('select * from recommend where id={}'.format(newsid))
         recommends = c.fetchone()
+        
+        print(recommends)
         recommends = recommends[1:]
         recommend_news = []
         for recommend_id in recommends :
