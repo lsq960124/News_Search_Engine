@@ -37,7 +37,7 @@ class CountRecommend:
     def create_sqlite3_conn(self):
         if not os.path.exists(self.db_dir):
             os.makedirs(self.db_dir)
-        return sqlite3.connect(self.db, check_same_thread=False,timeout=10)
+        return sqlite3.connect(self.db, check_same_thread=False, timeout=20)
 
     def init_recommend_db(self):
         c = self.conn.cursor()
@@ -50,11 +50,18 @@ class CountRecommend:
         self.conn.commit()
 
     def write_recommend_to_db(self, recommends):
-        c = self.conn.cursor()
-        sql = "INSERT INTO recommend VALUES (?, ?, ?, ?, ?, ?)", tuple(recommends)
-        print(sql)
-        c.execute(sql)
-        self.conn.commit()
+        i = 0
+        while i < 5:
+            try:
+                c = self.conn.cursor()
+                c.execute("INSERT INTO recommend VALUES (?, ?, ?, ?, ?, ?)", tuple(recommends))
+                self.conn.commit()
+                print("[+] write recommends to db success\t id:{}\t p:{}%".format(recommends[0],
+                                                                                 100 * recommends[0] // length))
+                return True
+            except Exception as e:
+                print('[-] write recommends to db error\t times:{}\t error:{}'.format(i, e))
+                i += 1
 
     def select_documents_from_db(self):
         c = self.conn.cursor()
@@ -109,8 +116,10 @@ class CountRecommend:
 CountRecommend = CountRecommend()
 
 documents = CountRecommend.select_documents_from_db()
+
 length = len(documents)
-new_recommends = []
+
+
 def predict(docs):
     try:
         id, sentence = docs
@@ -120,11 +129,10 @@ def predict(docs):
         if sims:
             sims = [id] + [int(i[0]) for i in sims if int(i[0]) != id]
             sims = sims[:6]
-            print("[+] id :{} recommend done, \t {}%".format(id, id*100//length))
-            new_recommends.append(sims)
-            
+            CountRecommend.write_recommend_to_db(sims)
     except  Exception as e:
         print("[-] id : {},error:{}".format(id, e))
+
 
 def count_recommend_start():
     flag = CountRecommend.is_recommend_tabel_exists()
@@ -135,7 +143,5 @@ def count_recommend_start():
         thread = threading.Thread(target=pool.map, args=(predict, [docs for docs in documents]))
         thread.start()
         thread.join()
-        for new_recommend in new_recommends:
-            CountRecommend.write_recommend_to_db(new_recommend)
     else:
         print("count recommend has already exists,dont create again...")
