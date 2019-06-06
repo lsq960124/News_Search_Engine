@@ -8,7 +8,7 @@ Created on Sat Jun  1 17:31:50 2019
 @E-mail: shengqiang.liu@videt.cn
 """
 import sqlite3
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for,redirect
 from search import search_use_bm25_model
 from search import conn
 from search import init_history_db
@@ -55,18 +55,23 @@ def search():
         if request.method == 'GET':
             keyword = request.values.get('keyword')
             keyword = keyword.strip()
-            docs = search_use_bm25_model(keyword)
-            for doc in docs:
-                for label in label_list:
-                    if doc[1] == label:
-                        result[label].append(doc)
+            if keyword:
+                docs = search_use_bm25_model(keyword)
+                for doc in docs:
+                    for label in label_list:
+                        if doc[1] == label:
+                            result[label].append(doc)
     except Exception as e:
         print('search engine error:',e)
-    return render_template("Search.html",
-                             docs = docs,
-                             result = result,
-                             key = keyword
-                             )        
+    if docs:
+        return render_template("Search.html",
+                                 docs = docs,
+                                 result = result,
+                                 key = keyword
+                                 )     
+    else:
+        return redirect(url_for('root'))
+
 
 @app.route("/news", methods=['POST', 'GET'])
 def newsinfo():
