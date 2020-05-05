@@ -51,6 +51,50 @@ http://94.191.125.117:2019
     |    |----CountRecommendNews.py         :计算推荐信息
 
 ```
+https://blog.csdn.net/luckGeek/article/details/88944089
+
+项目运行：
+
+准备工作 setup.py
+    + 数据收集：
+        + 爬连接： 广度优先遍历/深度  SpyderLinksFromSina.py
+        + 爬内容： 循环 SpyderNewsInfomation.py
+
+    + 倒排索引：
+        + BM25: CreateBM25Index.py
+
+    + 计算每篇新闻的推荐新闻：
+        + Doc2Vec：CountRecommendNews.py
+
+    + 创建用户表
+
+开始使用：
+    + 启动app
+        + 获取用户输入关键词
+        + 关键词分词 items
+            for item in items 
+                score = {'第一篇文档'：0.99，
+                        '第二篇文档'：0.19，
+                        '第n篇文档'：0.29，}
+            加和
+
+        + 排序
+        + 返回前n条
+
+    + 点击进入文章：
+        + 得到id搜索到文章的内容信息
+        + 通过id去推荐表中查对应的推荐文档id
+        + 推荐文档id去查推荐文档的标题
+
+        返回
+
+
+
+
+
+
+
+
 ### 联系作者
 QQ：470581985
 
