@@ -42,11 +42,20 @@ def clean_list(seg_list):
                 cleaned_dict[word] = 1
     return n, cleaned_dict
 
+
 '''检索答案'''
 def fetch_news_db(id):
     c = conn.cursor()
     c.execute('select * from news where id={}'.format(id))
-    return (c.fetchone())
+    return list(c.fetchone())
+
+'''高亮'''
+def highlight(docs, terms):
+    for doc in docs:
+        for term in terms:
+            doc[3] =  doc[3].replace(term, '<em><font color="red">{}</font></em>'.format(term))
+            doc[5] = doc[5].replace(term, '<em><font color="red">{}</font></em>'.format(term))
+    return docs
 
 '''获取BM25答案'''
 def search_use_bm25_model(sentence):
@@ -77,7 +86,9 @@ def search_use_bm25_model(sentence):
                 scores[docid] = score
     scores = sorted(scores.items(), key=operator.itemgetter(1))
     scores.reverse()
-    return [fetch_news_db(id) for id,score in scores][:20]
+    answers =  [fetch_news_db(id) for id,score in scores][:20]
+    answers = highlight(answers,seg_list)
+    return answers
 
 '''初始化历史表'''
 def init_history_db():

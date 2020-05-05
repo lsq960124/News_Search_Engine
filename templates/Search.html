@@ -36,7 +36,33 @@
     </script>
 </head>
 <body>
-
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/">新闻搜索引擎</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+            </ul>
+            {% if not login %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
 <!--content-->
 <div class="container" >
     <div class="jumbotron">
@@ -74,8 +100,8 @@
             {% if docs %} 
             {% for doc in docs %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -92,8 +118,8 @@
             {% if result.news %} 
             {% for doc in result.news %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -110,8 +136,8 @@
             {% if result.sports %} 
             {% for doc in result.sports %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -128,8 +154,8 @@
             {% if result.fashion %} 
             {% for doc in result.fashion %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -146,8 +172,8 @@
             {% if result.finance %} 
             {% for doc in result.finance %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -164,8 +190,8 @@
             {% if result.ent %} 
             {% for doc in result.ent %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -182,8 +208,8 @@
             {% if result.tech %} 
             {% for doc in result.tech %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -200,8 +226,8 @@
             {% if result.edu %} 
             {% for doc in result.edu %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -218,8 +244,8 @@
             {% if result.travel %} 
             {% for doc in result.travel %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -236,8 +262,8 @@
             {% if result.games %} 
             {% for doc in result.games %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>
@@ -254,8 +280,8 @@
             {% if result.auto %} 
             {% for doc in result.auto %}
                 <ul id="navigation">
-                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]}}</a></big></p>
-                    <p>{{doc[4]}}<br/>{{doc[5]}}<br/>
+                    <p><big><a href="/news?newsid={{doc[0]}}" target="_blank">{{doc[3]|safe}}</a></big></p>
+                    <p>{{doc[4]}}<br/>{{doc[5]|safe}}<br/>
                     <a href="{{doc[2]}}" target="_blank">{{doc[2]}}</a>
                     </p>
                 </ul>

@@ -82,7 +82,8 @@ class CountRecommend:
     def train(self, size=200):
         x_train = self.get_corpus()
         model = Doc2Vec(x_train, min_count=1, window=3, vector_size=size, sample=1e-3, negative=10, workers=6)
-        model.train(x_train, total_examples=model.corpus_count, epochs=100)
+        print('train Doc2Vec model ing....')
+        model.train(x_train, total_examples=model.corpus_count, epochs=1)
         model.save(self.word2vec_path)
         return model
 
